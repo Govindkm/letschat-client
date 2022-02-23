@@ -1,0 +1,23 @@
+{
+  "name": "letschat-client",
+  "version": "1.0.0",
+  "description": "client static website for chat application using websocket",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Govindkm/letschat-client.git"
+  },
+  "author": "govind",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Govindkm/letschat-client/issues"
+  },
+  "homepage": "https://github.com/Govindkm/letschat-client#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
