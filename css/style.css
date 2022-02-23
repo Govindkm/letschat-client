@@ -20,10 +20,6 @@ h1 {
   padding: 0px;
 }
 
-.title > h1 {
-  margin: 0px;
-}
-
 .chatbox {
   width: 50vw;
   margin: auto;
@@ -98,7 +94,7 @@ h1 {
   position: fixed;
   width: 100%;
   padding: 1rem;
-  margin-left: 10vw;
+  margin-left: 20vw;
 }
 
 #userinput input {
@@ -121,7 +117,7 @@ h1 {
 
 /* Style for side bar */
 .sidebar {
-  width: 10vw;
+  width: 20vw;
   background-color: #ebe1e1;
   position: fixed;
   height: 100vh;
@@ -153,25 +149,4 @@ ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
-}
-
-@media screen and (max-width: 700px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-  .sidebar a {
-    float: left;
-  }
-  div.content {
-    margin-left: 0;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  .sidebar a {
-    text-align: center;
-    float: none;
-  }
 }
