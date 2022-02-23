@@ -8,6 +8,10 @@ socket.emit("new-user-joined", name);
 socket.on("user-joined", (user) => {
   console.log(user);
   client.addUser(user);
+  client.createChatContainer(
+    client.dataright(`${user.name.split("_")[0]} joined the chat.`),
+    user.name
+  );
 });
 
 socket.on("active-users", (users) => {
@@ -20,6 +24,10 @@ socket.on("active-users", (users) => {
 socket.on("Disconnected", (user) => {
   console.log(user);
   client.clearActiveUser(user);
+  client.createChatContainer(
+    client.dataright(`${user.name.split("_")[0]} left the chat.`),
+    user.name
+  );
 });
 
 socket.on("recieve", (data) => {
