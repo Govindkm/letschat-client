@@ -3,22 +3,16 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import React, { useState } from "react";
-import Chat from "./Components/Chatbox/Chat";
 
 // import "./i18n";
 // todo: Use react i18n internationalization for translations of different headers. https://react.i18next.com/latest/using-with-hooks
 
-import {
-  Typography,
-  Grid,
-  ThemeProvider,
-  createTheme,
-  CssBaseline,
-  FormGroup,
-  FormControlLabel,
-  Switch,
-} from "@mui/material";
-import UsersList from "./Components/ActiveUsers/UsersList";
+import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
+import { Route, Routes } from "react-router-dom";
+import JoinPage from "./Components/Join/JoinPage";
+import Navbar from "./Components/Navbar/Navbar";
+import Chat from "./Components/ChatRoom/Chat";
+import SocketState from "./Context/SocketContext/SocketState";
 
 const darkTheme = createTheme({
   palette: {
@@ -33,9 +27,9 @@ const lightTheme = createTheme({
 });
 
 const App = () => {
-  const [theme, toggleTheme] = useState(darkTheme);
+  const [theme, toggleTheme] = useState(lightTheme);
   const toggleUI = () => {
-    if (theme == darkTheme) {
+    if (theme === darkTheme) {
       toggleTheme(lightTheme);
     } else {
       toggleTheme(darkTheme);
@@ -44,36 +38,21 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography variant="h4" component="h1" className="header-message">
-            LetsChat
-          </Typography>
-          <FormGroup>
-            <FormControlLabel
-              control={<Switch onChange={toggleUI} />}
-              label={`Switch ${theme == darkTheme ? "Light" : "Dark"}`}
-            />
-          </FormGroup>
-        </Grid>
-        <Grid item md={3} xs={12}>
-          <UsersList
-            users={[
-              { name: "Govind", id: "a", gender: "male" },
-              { name: "Durgesh", id: "b", gender: "female" },
-              { name: "Aryan", id: "c", gender: "male" },
-              { name: "Govind", id: "d", gender: "male" },
-              { name: "Durgesh", id: "e", gender: "female" },
-              { name: "Aryan", id: "f", gender: "male" },
-            ]}></UsersList>
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <Chat></Chat>
-        </Grid>
-        <Grid item md={3} xs={12}>
-          <Chat></Chat>
-        </Grid>
-      </Grid>
+      <div className="nav">
+        <Navbar toggler={toggleUI}></Navbar>
+      </div>
+      <Routes>
+        <Route exact path="/" element={<JoinPage />} />
+        <Route
+          exact
+          path="/chat"
+          element={
+            <SocketState>
+              <Chat />
+            </SocketState>
+          }
+        />
+      </Routes>
     </ThemeProvider>
   );
 };
