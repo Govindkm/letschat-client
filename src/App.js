@@ -28,6 +28,7 @@ const lightTheme = createTheme({
 
 const App = () => {
   const [theme, toggleTheme] = useState(lightTheme);
+  const [currentUser, setCurrentUser] = useState("");
   const toggleUI = () => {
     if (theme === darkTheme) {
       toggleTheme(lightTheme);
@@ -42,12 +43,16 @@ const App = () => {
         <Navbar toggler={toggleUI}></Navbar>
       </div>
       <Routes>
-        <Route exact path="/" element={<JoinPage />} />
+        <Route
+          exact
+          path="/"
+          element={<JoinPage user={currentUser} setUser={setCurrentUser} />}
+        />
         <Route
           exact
           path="/chat"
           element={
-            <SocketState>
+            <SocketState user={currentUser}>
               <Chat />
             </SocketState>
           }

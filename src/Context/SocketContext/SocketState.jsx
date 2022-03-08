@@ -9,12 +9,11 @@ function SocketState(props) {
       transports: ["websocket"],
     })
   );
+  const [Me, setMe] = useState(props.user);
   const [Users, setUsers] = useState([]);
   const [Messages, setMessages] = useState([]);
   useEffect(() => {
-    Socket.on("connection", (data) => {
-      console.log("Connected ", data);
-    });
+    Socket.emit("new-user-joined", Me);
 
     Socket.on("user-joined", (data) => {
       console.log("New User Joined ", data);
@@ -45,7 +44,7 @@ function SocketState(props) {
   }, []);
   return (
     <>
-      <SocketContext.Provider value={{ Socket, setSocket }}>
+      <SocketContext.Provider value={{ Socket, setSocket, Me }}>
         {props.children}
       </SocketContext.Provider>
     </>
