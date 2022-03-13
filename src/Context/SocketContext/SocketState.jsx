@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SocketContext from "./SocketContext";
 import io from "socket.io-client";
+import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
 
 function SocketState(props) {
@@ -22,11 +23,13 @@ function SocketState(props) {
 
     Socket.on("recieve", (data) => {
       console.log("Received a new message ", data);
+      data.id = uuidv4();
+      data.timestamp = Date.now();
       setMessages((currentMessages) => {
-        let copy = _.cloneDeep(Messages);
+        let copy = _.cloneDeep(currentMessages);
         copy.push(data);
         console.log("Messages : ", copy);
-        return copy;
+        setMessages(copy);
       });
     });
 
@@ -36,7 +39,7 @@ function SocketState(props) {
         const copy = _.cloneDeep(currentUsers);
         setUsers(
           copy.filter((user) => {
-            return user.id != data.id;
+            return user.id !== data.id;
           })
         );
       });
@@ -44,7 +47,8 @@ function SocketState(props) {
   }, []);
   return (
     <>
-      <SocketContext.Provider value={{ Socket, setSocket, Me }}>
+      <SocketContext.Provider
+        value={{ Socket, setSocket, Me, Messages, setMessages }}>
         {props.children}
       </SocketContext.Provider>
     </>

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import "./JoinPage.css";
 const useStyles = makeStyles({
   joinBtn: {
-    width: "42rem",
+    width: "42vw",
     backgroundColor: "crimson",
     fontSize: "2rem",
     margin: "2rem 0rem",
