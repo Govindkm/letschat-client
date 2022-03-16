@@ -7,13 +7,17 @@ import _ from "lodash";
 function SocketState(props) {
   const [Socket, setSocket] = useState(
     io("https://letschat-scoketio.herokuapp.com/", {
-      transports: ["websocket"],
+      transports: ["websocket", "polling"],
     })
   );
   const [Me, setMe] = useState(props.user);
   const [Users, setUsers] = useState([]);
   const [Messages, setMessages] = useState([]);
   useEffect(() => {
+    Socket.on("connect_error", () => {
+      // revert to classic upgrade
+      Socket.io.opts.transports = ["polling", "websocket"];
+    });
     Socket.emit("new-user-joined", Me);
 
     Socket.on("user-joined", (data) => {
